@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zooming Fashion Prototype</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-p6yZAlYulczLU9s0q3p29i0kzvpwVgk/XzysowkCK3GgOGCeDZW4qPiFzV7nxEwHoo3Bw/ix5xBj1h4v8E2BA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-content">
+      <h1>Zooming Fashion</h1>
+      <p class="subtitle">A new way to experience couture</p>
+    </div>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="#zoomIn">Zoom In</a></li>
+        <li><a href="#zoomOut">Zoom Out</a></li>
+        <li><a href="#zoomThrough">Zoom Through</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <!-- Zoom In Section -->
+    <section id="zoomIn" class="section">
+      <h2>Zoom In</h2>
+      <p class="section-intro">Explore the intricate details of couture garments.</p>
+      <div class="zoom-interface">
+        <div class="zoom-image-container">
+          <!-- Pattern image used for zooming -->
+          <img id="fabricImage" src="small_pattern.jpg" alt="Fabric pattern" />
+          <!-- Lens used to highlight zoom area -->
+          <div id="zoomLens"></div>
+        </div>
+        <div id="zoomResult"></div>
+      </div>
+      <div class="details">
+        <h3>Craftsmanship Highlights</h3>
+        <ul>
+          <li>Hand‑embroidered silk threads</li>
+          <li>Broccato fabric with floral patterns</li>
+          <li>Classic Italian craftsmanship</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Zoom Out Section -->
+    <section id="zoomOut" class="section alt-bg">
+      <h2>Zoom Out</h2>
+      <p class="section-intro">Discover the story behind each garment and its cultural context.</p>
+      <div class="story">
+        <h3>Historical Context</h3>
+        <p>
+          This archival garment pays homage to the elegance of Italian haute couture. Created in the mid‑20th century, it reflects a period of
+          creativity when designers like <span class="designer-name">Renato Balestra</span> blended traditional craftsmanship with innovative cuts.
+          The intricate broccato motifs and rich silk embody a narrative of artistry, culture and history.
+        </p>
+        <h3>Designer Biography</h3>
+        <p>
+          <span class="designer-name">Renato Balestra</span> was an iconic Italian fashion designer celebrated for his exquisite embroidery and
+          visionary silhouettes. His work helped define the Italian couture scene in the 1950s and 1960s, inspiring generations of designers.
+        </p>
+      </div>
+    </section>
+
+    <!-- Zoom Through Section -->
+    <section id="zoomThrough" class="section">
+      <h2>Zoom Through</h2>
+      <p class="section-intro">Try on garments virtually by uploading your photo.</p>
+      <div class="try-on-controls">
+        <label for="uploadInput" class="upload-label"><i class="fas fa-upload"></i> Choose a photo</label>
+        <input type="file" id="uploadInput" accept="image/*">
+      </div>
+      <div id="virtualTryOn" class="try-on-canvas hidden">
+        <img id="userPhoto" alt="Uploaded photo" />
+        <!-- Dress silhouette overlay -->
+        <svg id="dressOverlay" viewBox="0 0 200 400" preserveAspectRatio="xMidYMid meet">
+          <path d="M100 0 L60 40 L60 100 L20 380 L180 380 L140 100 L140 40 Z" fill="rgba(255,255,255,0.8)" stroke="#333" stroke-width="2" />
+        </svg>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <p>Prototype of Zooming Fashion — developed for demonstration purposes only.</p>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
