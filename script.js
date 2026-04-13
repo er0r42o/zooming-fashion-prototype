@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
       dropZone.classList.add('hidden');
       scanPreview.classList.remove('hidden');
       btnToDetails.disabled = false;
-      // Re-initialise zoom background once image loads
+      // Re-initialize zoom background once image loads
       fabricImage.onload = () => initZoom();
     };
     reader.readAsDataURL(file);
