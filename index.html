@@ -4,88 +4,184 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zooming Fashion Prototype</title>
+  <title>Zooming Fashion</title>
   <link rel="stylesheet" href="style.css">
-  <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-p6yZAlYulczLU9s0q3p29i0kzvpwVgk/XzysowkCK3GgOGCeDZW4qPiFzV7nxEwHoo3Bw/ix5xBj1h4v8E2BA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-  <header class="hero">
-    <div class="hero-content">
-      <h1>Zooming Fashion</h1>
-      <p class="subtitle">A new way to experience couture</p>
-    </div>
-    <nav class="main-nav">
-      <ul>
-        <li><a href="#zoomIn">Zoom In</a></li>
-        <li><a href="#zoomOut">Zoom Out</a></li>
-        <li><a href="#zoomThrough">Zoom Through</a></li>
-      </ul>
-    </nav>
-  </header>
-  <main>
-    <!-- Zoom In Section -->
-    <section id="zoomIn" class="section">
-      <h2>Zoom In</h2>
-      <p class="section-intro">Explore the intricate details of couture garments.</p>
-      <div class="zoom-interface">
-        <div class="zoom-image-container">
-          <!-- Pattern image used for zooming -->
-          <img id="fabricImage" src="small_pattern.jpg" alt="Fabric pattern" />
-          <!-- Lens used to highlight zoom area -->
-          <div id="zoomLens"></div>
+
+  <!-- STEP INDICATOR -->
+  <nav class="step-nav" aria-label="Progress">
+    <button class="step-dot active" data-page="1" aria-label="Step 1: Scan garment"></button>
+    <span class="step-line"></span>
+    <button class="step-dot" data-page="2" aria-label="Step 2: Garment details"></button>
+    <span class="step-line"></span>
+    <button class="step-dot" data-page="3" aria-label="Step 3: Virtual try-on"></button>
+  </nav>
+
+  <!-- PAGE 1 — SCAN GARMENT -->
+  <div class="page active" id="page-1">
+    <div class="page-1-inner">
+      <header class="brand-header">
+        <span class="brand-eyebrow">Experience Couture</span>
+        <h1 class="brand-title">Zooming<br>Fashion</h1>
+        <p class="brand-tagline">Scan a garment to unlock its story, craftsmanship and fit.</p>
+      </header>
+
+      <div class="scan-area" id="scanArea">
+        <input type="file" id="garmentInput" accept="image/*" aria-label="Upload garment image">
+        <div class="scan-drop-zone" id="dropZone" role="button" tabindex="0" aria-label="Click or drag a garment photo here">
+          <i class="fas fa-camera scan-icon"></i>
+          <p class="scan-label">Drag &amp; drop or <span class="scan-link">browse</span></p>
+          <p class="scan-hint">JPEG &middot; PNG &middot; WEBP</p>
         </div>
-        <div id="zoomResult"></div>
+        <div class="scan-preview hidden" id="scanPreview">
+          <img id="garmentPreview" alt="Garment preview">
+          <button class="btn-ghost btn-rescan" id="btnRescan" type="button">
+            <i class="fas fa-redo"></i> Re-scan
+          </button>
+        </div>
       </div>
-      <div class="details">
-        <h3>Craftsmanship Highlights</h3>
-        <ul>
-          <li>Hand‑embroidered silk threads</li>
-          <li>Broccato fabric with floral patterns</li>
-          <li>Classic Italian craftsmanship</li>
-        </ul>
-      </div>
-    </section>
 
-    <!-- Zoom Out Section -->
-    <section id="zoomOut" class="section alt-bg">
-      <h2>Zoom Out</h2>
-      <p class="section-intro">Discover the story behind each garment and its cultural context.</p>
-      <div class="story">
-        <h3>Historical Context</h3>
-        <p>
-          This archival garment pays homage to the elegance of Italian haute couture. Created in the mid‑20th century, it reflects a period of
-          creativity when designers like <span class="designer-name">Renato Balestra</span> blended traditional craftsmanship with innovative cuts.
-          The intricate broccato motifs and rich silk embody a narrative of artistry, culture and history.
-        </p>
-        <h3>Designer Biography</h3>
-        <p>
-          <span class="designer-name">Renato Balestra</span> was an iconic Italian fashion designer celebrated for his exquisite embroidery and
-          visionary silhouettes. His work helped define the Italian couture scene in the 1950s and 1960s, inspiring generations of designers.
-        </p>
-      </div>
-    </section>
+      <button class="btn-primary btn-next" id="btnToDetails" type="button" disabled>
+        Discover Details <i class="fas fa-arrow-right"></i>
+      </button>
+    </div>
+  </div>
 
-    <!-- Zoom Through Section -->
-    <section id="zoomThrough" class="section">
-      <h2>Zoom Through</h2>
-      <p class="section-intro">Try on garments virtually by uploading your photo.</p>
-      <div class="try-on-controls">
-        <label for="uploadInput" class="upload-label"><i class="fas fa-upload"></i> Choose a photo</label>
-        <input type="file" id="uploadInput" accept="image/*">
+  <!-- PAGE 2 — GARMENT DETAILS -->
+  <div class="page" id="page-2">
+    <div class="page-2-inner">
+      <div class="details-header">
+        <button class="btn-back" id="btnBackToScan" type="button" aria-label="Back to scan">
+          <i class="fas fa-arrow-left"></i>
+        </button>
+        <h2 class="page-title">Garment Details</h2>
       </div>
-      <div id="virtualTryOn" class="try-on-canvas hidden">
-        <img id="userPhoto" alt="Uploaded photo" />
-        <!-- Dress silhouette overlay -->
-        <svg id="dressOverlay" viewBox="0 0 200 400" preserveAspectRatio="xMidYMid meet">
-          <path d="M100 0 L60 40 L60 100 L20 380 L180 380 L140 100 L140 40 Z" fill="rgba(255,255,255,0.8)" stroke="#333" stroke-width="2" />
-        </svg>
+
+      <!-- ZOOM IN -->
+      <section class="feature-block" aria-labelledby="feature-zoom-title">
+        <div class="feature-label">
+          <i class="fas fa-search-plus feature-icon"></i>
+          <h3 id="feature-zoom-title">Zoom In &mdash; Fabric Explorer</h3>
+        </div>
+        <p class="feature-desc">Hover over the garment to reveal every thread and stitch.</p>
+        <div class="zoom-interface">
+          <div class="zoom-image-container" id="zoomContainer">
+            <img id="fabricImage" src="small_pattern.jpg" alt="Garment fabric close-up">
+            <div id="zoomLens" aria-hidden="true"></div>
+          </div>
+          <div class="zoom-result-wrap">
+            <div id="zoomResult" aria-label="Magnified fabric view"></div>
+            <span class="zoom-hint"><i class="fas fa-mouse-pointer"></i> Move over image to explore</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ZOOM OUT -->
+      <section class="feature-block alt" aria-labelledby="feature-story-title">
+        <div class="feature-label">
+          <i class="fas fa-book-open feature-icon"></i>
+          <h3 id="feature-story-title">Zoom Out &mdash; The Story</h3>
+        </div>
+
+        <div class="info-tabs" role="tablist" aria-label="Garment information">
+          <button class="tab active" role="tab" aria-selected="true" aria-controls="tab-craft" id="tab-btn-craft">Craftsmanship</button>
+          <button class="tab" role="tab" aria-selected="false" aria-controls="tab-history" id="tab-btn-history">History</button>
+          <button class="tab" role="tab" aria-selected="false" aria-controls="tab-designer" id="tab-btn-designer">Designer</button>
+        </div>
+
+        <div class="tab-panels">
+          <div class="tab-panel active" id="tab-craft" role="tabpanel" aria-labelledby="tab-btn-craft">
+            <ul class="craft-list">
+              <li><i class="fas fa-check-circle"></i> Hand-embroidered silk threads</li>
+              <li><i class="fas fa-check-circle"></i> Broccato fabric with floral patterns</li>
+              <li><i class="fas fa-check-circle"></i> Classic Italian craftsmanship</li>
+              <li><i class="fas fa-check-circle"></i> Double-stitched seams for durability</li>
+              <li><i class="fas fa-check-circle"></i> Natural dye &mdash; indigo and saffron</li>
+            </ul>
+          </div>
+          <div class="tab-panel" id="tab-history" role="tabpanel" aria-labelledby="tab-btn-history">
+            <p>This archival garment pays homage to the elegance of Italian haute couture. Created in the mid-20th century, it reflects a period of creativity when designers blended traditional craftsmanship with innovative cuts. The intricate broccato motifs and rich silk embody a narrative of artistry, culture and history.</p>
+          </div>
+          <div class="tab-panel" id="tab-designer" role="tabpanel" aria-labelledby="tab-btn-designer">
+            <p><strong>Renato Balestra</strong> was an iconic Italian fashion designer celebrated for his exquisite embroidery and visionary silhouettes. His work helped define the Italian couture scene in the 1950s and 1960s, inspiring generations of designers worldwide.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- QUICK STATS -->
+      <section class="stats-row" aria-label="Garment quick facts">
+        <div class="stat">
+          <span class="stat-value">1962</span>
+          <span class="stat-label">Year</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">Silk</span>
+          <span class="stat-label">Material</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">Italy</span>
+          <span class="stat-label">Origin</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">Couture</span>
+          <span class="stat-label">Category</span>
+        </div>
+      </section>
+
+      <button class="btn-primary btn-next" id="btnToTryOn" type="button">
+        Try It On <i class="fas fa-tshirt"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- PAGE 3 — VIRTUAL TRY-ON -->
+  <div class="page" id="page-3">
+    <div class="page-3-inner">
+      <div class="details-header">
+        <button class="btn-back" id="btnBackToDetails" type="button" aria-label="Back to details">
+          <i class="fas fa-arrow-left"></i>
+        </button>
+        <h2 class="page-title">Virtual Try-On</h2>
       </div>
-    </section>
-  </main>
-  <footer>
-    <p>Prototype of Zooming Fashion — developed for demonstration purposes only.</p>
-  </footer>
+
+      <p class="feature-desc center">Upload your photo to see how this garment looks on you.</p>
+
+      <div class="tryon-area">
+        <div class="tryon-upload">
+          <label for="selfieInput" class="btn-primary btn-upload-photo">
+            <i class="fas fa-user-circle"></i> Upload Your Photo
+          </label>
+          <input type="file" id="selfieInput" accept="image/*" aria-label="Upload your photo">
+        </div>
+
+        <div class="tryon-canvas-wrap hidden" id="tryOnWrap">
+          <div class="tryon-canvas" id="tryOnCanvas">
+            <img id="userPhoto" alt="Your photo">
+            <svg id="dressOverlay" viewBox="0 0 200 400" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+              <defs>
+                <pattern id="fabricPattern" patternUnits="userSpaceOnUse" width="200" height="200">
+                  <image href="small_pattern.jpg" x="0" y="0" width="200" height="200"/>
+                </pattern>
+              </defs>
+              <path d="M100 10 C85 10 72 20 65 35 L45 80 L20 90 L15 130 L40 130 L30 390 L170 390 L160 130 L185 130 L180 90 L155 80 L135 35 C128 20 115 10 100 10 Z"
+                    fill="url(#fabricPattern)" stroke="#c8a96e" stroke-width="2" opacity="0.88"/>
+              <ellipse cx="100" cy="18" rx="18" ry="10" fill="none" stroke="#c8a96e" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <p class="tryon-note"><i class="fas fa-info-circle"></i> Overlay is illustrative &mdash; full AI fitting coming soon.</p>
+        </div>
+      </div>
+
+      <div class="tryon-actions">
+        <button class="btn-primary" id="btnStartOver" type="button">
+          <i class="fas fa-home"></i> Start Over
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>
